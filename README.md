@@ -30,7 +30,7 @@ ___
 - [x] Display a banner when the user has 5 nominations.
 
 ### Extras added
-- [x] Save nominations lifts if the user leaves the page
+- [x] Save nominations lists if the user leaves the page
 - [x] Display spinner when results are being fetched 
 - [x] Display overview of how many nominations the user has made and how many they can still make
 - [x] Once the user has 5 nominations, all nominate buttons are disabled, so no more nominations can be added
