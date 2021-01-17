@@ -1,6 +1,7 @@
 # The Shoppies - by Alexander Zenner
 
 ## Link to deployed app: [zenner.org/shoppies](https://zenner.org/shoppies)
+___ 
 
 ## Overview
 This project was setup with
@@ -14,15 +15,13 @@ I chose to use Shopify Polaris, because
   - I wanted the app to have the look and feel of an actual Shopify app
   - I love exploring new design systems :)
 
+I challenged myself to replicate the design shown in the challenge description doc. \
+After replicating the design I added a few more touches to help the user, including some instructions and a link back to this repository (+ see the "Extras added" below).
 
-I challenged myself to replicate the design displayed in the challenge description doc. \
-After replicating the design I added a few more touches to help the user:
-- some instructions
-- an overview of how many nominations the user has made and how many they can still make
-- a link back to this repository
+___
 
 ## Features
-### Technical Requirements 
+### Technical Requirements (from the challenge description doc)
 - [x] Search results should come from OMDB's API
 - [x] Each search result should list at least its title, year of release and a button to nominate that film.
 - [x] Updates to the search terms should update the result list
@@ -31,10 +30,12 @@ After replicating the design I added a few more touches to help the user:
 - [x] Display a banner when the user has 5 nominations.
 
 ### Extras added
+- [x] Display spinner when results are being fetched 
 - [x] Display overview of how many nominations the user has made and how many they can still make
 - [x] Once the user has 5 nominations, all nominate buttons are disabled, so no more nominations can be added
 - [x] SSL Encrypted Traffic
 - [x] Shopify Favicon
+___
 
 ## Setup
 - clone this repository
