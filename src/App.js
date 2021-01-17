@@ -6,7 +6,7 @@ import { SearchMinor } from '@shopify/polaris-icons';
 
 class App extends Component {
 
-  apiUrl = 'http://www.omdbapi.com/?type=movie';
+  apiUrl = 'https://www.omdbapi.com/?type=movie';
   apiKey = '449289f';
   favoritesLengthGoal = 5;
 
@@ -124,7 +124,7 @@ class App extends Component {
           </Layout.Section>
         </Layout>
         <FooterHelp>
-          Find the code and my notes in my <Link url="https://github.com/alexanderzenner/shopify-internship-challenge">
+          Find the code and my notes in my <Link url="https://github.com/alexanderzenner/shoppies">
             GitHub repository
           </Link>
         </FooterHelp>
