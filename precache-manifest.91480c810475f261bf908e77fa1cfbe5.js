@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5c1bf0d65dff8abcd4574a97bd934cfb",
+    "revision": "41e527fc7916ae38e8704a8b6a345c93",
     "url": "/shoppies/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/shoppies/static/js/2.e69050b3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "bcc1a5fd692c7d66635c",
-    "url": "/shoppies/static/js/main.38053f99.chunk.js"
+    "revision": "3b078fa25c3079900f6b",
+    "url": "/shoppies/static/js/main.07ea9032.chunk.js"
   },
   {
     "revision": "27778a2488007f8c9380",
