@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Autocomplete, Icon, Button, Banner, Stack, TextContainer, List, Page, Layout, Card, Spinner, FooterHelp, Link } from '@shopify/polaris';
+import { Autocomplete, Icon, Button, Banner, Stack, TextContainer, List, Page, Layout, Card, Spinner, FooterHelp, Link, TextStyle } from '@shopify/polaris';
 import { SearchMinor } from '@shopify/polaris-icons';
 
 class App extends Component {
@@ -51,22 +51,21 @@ class App extends Component {
     return this.state.favorites.length === this.favoritesLengthGoal;
   }
 
-  componentDidMount() {
-    console.log(window.location.href);
-  }
-
   getSearchResultTitle() {
     return `Results for "${this.state.search}"`
+  }
+
+  getNominationsTitle() {
+    return `Nominations (${this.state.favorites.length}/${this.favoritesLengthGoal})`
   }
 
   render() {
     return (
       <Page
-        title="The Shoppies"
-        subtitle="by Alexander Zenner">
+        title="The Shoppies">
         <Layout>
           <Layout.Section>
-            <Card>
+            <Card >
               <Card.Section>
               <Autocomplete.TextField
                 onChange={this.updateSearchTerm}
@@ -76,6 +75,11 @@ class App extends Component {
                 placeholder="Search"
               />
               </Card.Section>
+              <Card.Section subdued>
+    <TextContainer>
+      Search for your favorite movies and nominate {this.favoritesLengthGoal} for <TextStyle variation="strong">The Shoppies</TextStyle>.
+    </TextContainer>
+  </Card.Section>
             </Card>
           </Layout.Section>
           <Layout.Section oneHalf>
@@ -99,11 +103,11 @@ class App extends Component {
             </Card>
           </Layout.Section>
           <Layout.Section oneHalf>
-            <Card title="Nominations" sectioned>
+            <Card title={this.getNominationsTitle()} sectioned>
               <TextContainer>
               {
                 this.favoritesIsFull() &&
-                <Banner>
+                <Banner status="success">
                   <p>You've completed your {this.favoritesLengthGoal} nominations</p>
                 </Banner>
               }
