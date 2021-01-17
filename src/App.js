@@ -31,17 +31,17 @@ class App extends Component {
   }
 
   updateSearchTerm = term => {
-    this.setState({ searchTerm: term, isLoading: true }, () => this.search());
+    this.setState({ searchTerm: term, isLoading: true }, this.search);
   }
 
   selectMovie = movie => {
-    this.setState({ nominations: [...this.state.nominations, movie] })
+    this.setState({ nominations: [...this.state.nominations, movie] }, this.updateLocalNominationsStorage)
   }
 
   unselectMovie = index => {
     var nominationsCopy = this.state.nominations;
     nominationsCopy.splice(index, 1);
-    this.setState({ nominations: nominationsCopy })
+    this.setState({ nominations: nominationsCopy }, this.updateLocalNominationsStorage)
   }
 
   checkIfIsSelected = movie => {
@@ -50,6 +50,20 @@ class App extends Component {
 
   isNominationsComplete = () => {
     return this.state.nominations.length === this.nominationsAmountGoal;
+  }
+
+  updateLocalNominationsStorage() {
+    localStorage.setItem('nominations', JSON.stringify(this.state.nominations));
+  }
+
+  componentDidMount() {
+    var storedNominations = JSON.parse(localStorage.getItem('nominations'));
+    console.log(storedNominations);
+    if (storedNominations !== null && storedNominations !== undefined) {
+      this.setState({
+        nominations: storedNominations
+      });
+    }
   }
 
   render() {
@@ -80,7 +94,7 @@ class App extends Component {
               nominationsAmountGoal={this.nominationsAmountGoal}
               unselectMovie={this.unselectMovie}
               isNominationsComplete={this.isNominationsComplete}
-              >
+            >
             </NominationsCard>
           </Layout.Section>
         </Layout>
