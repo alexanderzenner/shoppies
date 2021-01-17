@@ -1,3 +1,5 @@
+// Copyright (C) 2021 Alexander Zenner for Shopify Application - All Rights Reserved
+
 import React from 'react';
 import { Button, Stack, TextContainer, List, Card, Spinner } from '@shopify/polaris';
 

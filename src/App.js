@@ -1,3 +1,5 @@
+// Copyright (C) 2021 Alexander Zenner for Shopify Application - All Rights Reserved
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Page, Layout, FooterHelp, Link } from '@shopify/polaris';

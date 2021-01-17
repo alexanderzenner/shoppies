@@ -1,3 +1,5 @@
+// Copyright (C) 2021 Alexander Zenner for Shopify Application - All Rights Reserved
+
 import React from 'react';
 import { Autocomplete, Icon, TextContainer, Card, TextStyle } from '@shopify/polaris';
 import { SearchMinor } from '@shopify/polaris-icons';
