@@ -31,17 +31,17 @@ class App extends Component {
   }
 
   updateSearchTerm = term => {
-    this.setState({ searchTerm: term, isLoading: true }, this.search);
+    this.setState({ searchTerm: term, isLoading: true }, () => this.search());
   }
 
   selectMovie = movie => {
-    this.setState({ nominations: [...this.state.nominations, movie] }, this.updateLocalNominationsStorage)
+    this.setState({ nominations: [...this.state.nominations, movie] }, () => this.updateLocalNominationsStorage())
   }
 
   unselectMovie = index => {
     var nominationsCopy = this.state.nominations;
     nominationsCopy.splice(index, 1);
-    this.setState({ nominations: nominationsCopy }, this.updateLocalNominationsStorage)
+    this.setState({ nominations: nominationsCopy }, () => this.updateLocalNominationsStorage())
   }
 
   checkIfIsSelected = movie => {
@@ -58,7 +58,6 @@ class App extends Component {
 
   componentDidMount() {
     var storedNominations = JSON.parse(localStorage.getItem('nominations'));
-    console.log(storedNominations);
     if (storedNominations !== null && storedNominations !== undefined) {
       this.setState({
         nominations: storedNominations
