@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Autocomplete, Icon, Button, Banner, Stack, TextContainer, List, Page, Layout, Card, Spinner } from '@shopify/polaris';
+import { Autocomplete, Icon, Button, Banner, Stack, TextContainer, List, Page, Layout, Card, Spinner, FooterHelp, Link } from '@shopify/polaris';
 import { SearchMinor } from '@shopify/polaris-icons';
 
 class App extends Component {
@@ -62,7 +62,8 @@ class App extends Component {
   render() {
     return (
       <Page
-        title="The Shoppies">
+        title="The Shoppies"
+        subtitle="by Alexander Zenner">
         <Layout>
           <Layout.Section>
             <Card>
@@ -122,6 +123,11 @@ class App extends Component {
             </Card>
           </Layout.Section>
         </Layout>
+        <FooterHelp>
+          Find the code and my notes in my <Link url="https://github.com/alexanderzenner/shopify-internship-challenge">
+            GitHub repository
+          </Link>
+        </FooterHelp>
       </Page>
     );
   }  
