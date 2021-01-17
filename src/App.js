@@ -1,62 +1,55 @@
-
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Autocomplete, Icon, Button, Banner, Stack, TextContainer, List, Page, Layout, Card, Spinner, FooterHelp, Link, TextStyle } from '@shopify/polaris';
-import { SearchMinor } from '@shopify/polaris-icons';
+import { Page, Layout, FooterHelp, Link } from '@shopify/polaris';
+import SearchCard from './components/SearchCard';
+import ResultsCard from './components/ResultsCard';
+import NominationsCard from './components/NominationsCard';
 
 class App extends Component {
 
   apiUrl = 'https://www.omdbapi.com/?type=movie';
   apiKey = '449289f';
-  favoritesLengthGoal = 5;
+  nominationsAmountGoal = 5;
 
   state = {
-    search: '',
+    searchTerm: '',
     isLoading: false,
     movies: [],
-    favorites: [],
+    nominations: [],
   }
 
   search() {
-    axios.get(`${this.apiUrl}&s=${this.state.search}&apikey=${this.apiKey}`)
-    .then((response) => {
-      if (response.data['Response'] === 'True') {
-        this.setState({ movies: response.data['Search'], isLoading: false});
-      } else {
-        this.setState({ movies: [], isLoading: false});
-      }
-    })
-    .catch(console.log)
+    axios.get(`${this.apiUrl}&s=${this.state.searchTerm}&apikey=${this.apiKey}`)
+      .then((response) => {
+        if (response.data['Response'] === 'True') {
+          this.setState({ movies: response.data['Search'], isLoading: false });
+        } else {
+          this.setState({ movies: [], isLoading: false });
+        }
+      })
+      .catch(console.log)
   }
 
-  updateSearchTerm = (value) => {
-    this.setState({ search: value, isLoading: true }, () => this.search());
+  updateSearchTerm = term => {
+    this.setState({ searchTerm: term, isLoading: true }, () => this.search());
   }
 
-  selectMovie(movie) {
-    this.setState({ favorites: [...this.state.favorites, movie] })
+  selectMovie = movie => {
+    this.setState({ nominations: [...this.state.nominations, movie] })
   }
 
-  unselectMovie(index) {
-    var favoritesCopy = this.state.favorites;
-    favoritesCopy.splice(index, 1);
-    this.setState({ favorites: favoritesCopy})
+  unselectMovie = index => {
+    var nominationsCopy = this.state.nominations;
+    nominationsCopy.splice(index, 1);
+    this.setState({ nominations: nominationsCopy })
   }
 
-  checkIfIsSelected(movie) {
-    return this.state.favorites.map((m) => m["imdbID"]).includes(movie["imdbID"]);
+  checkIfIsSelected = movie => {
+    return this.state.nominations.map((m) => m["imdbID"]).includes(movie["imdbID"]);
   }
 
-  favoritesIsFull() {
-    return this.state.favorites.length === this.favoritesLengthGoal;
-  }
-
-  getSearchResultTitle() {
-    return `Results for "${this.state.search}"`
-  }
-
-  getNominationsTitle() {
-    return `Nominations (${this.state.favorites.length}/${this.favoritesLengthGoal})`
+  isNominationsComplete = () => {
+    return this.state.nominations.length === this.nominationsAmountGoal;
   }
 
   render() {
@@ -65,66 +58,30 @@ class App extends Component {
         title="The Shoppies">
         <Layout>
           <Layout.Section>
-            <Card >
-              <Card.Section>
-              <Autocomplete.TextField
-                onChange={this.updateSearchTerm}
-                label="Movie title"
-                value={this.state.search}
-                prefix={<Icon source={SearchMinor} color="inkLighter" />}
-                placeholder="Search"
-              />
-              </Card.Section>
-              <Card.Section subdued>
-    <TextContainer>
-      Search for your favorite movies and nominate {this.favoritesLengthGoal} for <TextStyle variation="strong">The Shoppies</TextStyle>.
-    </TextContainer>
-  </Card.Section>
-            </Card>
+            <SearchCard
+              nominationsAmountGoal={this.nominationsAmountGoal}
+              searchTerm={this.state.searchTerm}
+              updateSearchTerm={this.updateSearchTerm}>
+            </SearchCard>
           </Layout.Section>
           <Layout.Section oneHalf>
-            <Card title={this.getSearchResultTitle()} sectioned>
-            {
-              this.state.isLoading && 
-              <Spinner accessibilityLabel="Spinner example" size="large" color="teal" />
-            }
-            <List type="bullet">
-              {this.state.movies.map((movie, i) => (
-                <List.Item key={i}>
-                  <Stack spacing="extraTight" alignment="center">
-                    <TextContainer>
-                      {movie["Title"]} ({movie["Year"]}) 
-                    </TextContainer>
-                    <Button size="slim" onClick={() => this.selectMovie(movie)} disabled={this.checkIfIsSelected(movie) || this.favoritesIsFull()}>Nominate</Button>
-                  </Stack>
-                </List.Item>
-              ))}
-            </List>
-            </Card>
+            <ResultsCard
+              searchTerm={this.state.searchTerm}
+              isLoading={this.state.isLoading}
+              movies={this.state.movies}
+              selectMovie={this.selectMovie}
+              checkIfIsSelected={this.checkIfIsSelected}
+              isNominationsComplete={this.isNominationsComplete}>
+            </ResultsCard>
           </Layout.Section>
           <Layout.Section oneHalf>
-            <Card title={this.getNominationsTitle()} sectioned>
-              <TextContainer>
-              {
-                this.favoritesIsFull() &&
-                <Banner status="success">
-                  <p>You've completed your {this.favoritesLengthGoal} nominations</p>
-                </Banner>
-              }
-              <List type="bullet">
-                {this.state.favorites.map((movie, i) => (
-                  <List.Item key={i}>
-                    <Stack spacing="extraTight" alignment="center">
-                      <TextContainer>
-                        {movie["Title"]} ({movie["Year"]})
-                      </TextContainer>
-                      <Button size="slim" onClick={() => this.unselectMovie(i)}>Remove</Button>
-                    </Stack>
-                  </List.Item>
-                ))}
-              </List>
-              </TextContainer>
-            </Card>
+            <NominationsCard
+              nominations={this.state.nominations}
+              nominationsAmountGoal={this.nominationsAmountGoal}
+              unselectMovie={this.unselectMovie}
+              isNominationsComplete={this.isNominationsComplete}
+              >
+            </NominationsCard>
           </Layout.Section>
         </Layout>
         <FooterHelp>
@@ -134,7 +91,7 @@ class App extends Component {
         </FooterHelp>
       </Page>
     );
-  }  
+  }
 }
 
 export default App;
