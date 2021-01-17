@@ -12,6 +12,7 @@ class App extends Component {
 
   state = {
     search: '',
+    isLoading: false,
     movies: [],
     favorites: [],
   }
@@ -20,16 +21,16 @@ class App extends Component {
     axios.get(`${this.apiUrl}&s=${this.state.search}&apikey=${this.apiKey}`)
     .then((response) => {
       if (response.data['Response'] === 'True') {
-        this.setState({ movies: response.data['Search'] });
+        this.setState({ movies: response.data['Search'], isLoading: false});
       } else {
-        this.setState({ movies: []});
+        this.setState({ movies: [], isLoading: false});
       }
     })
     .catch(console.log)
   }
 
   updateSearchTerm = (value) => {
-    this.setState({ search: value }, () => this.search());
+    this.setState({ search: value, isLoading: true }, () => this.search());
   }
 
   selectMovie(movie) {
@@ -78,7 +79,10 @@ class App extends Component {
           </Layout.Section>
           <Layout.Section oneHalf>
             <Card title={this.getSearchResultTitle()} sectioned>
-            <Spinner accessibilityLabel="Spinner example" size="large" color="teal" />
+            {
+              this.state.isLoading && 
+              <Spinner accessibilityLabel="Spinner example" size="large" color="teal" />
+            }
             <List type="bullet">
               {this.state.movies.map((movie, i) => (
                 <List.Item key={i}>
